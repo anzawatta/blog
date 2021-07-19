@@ -1,0 +1,116 @@
+
+post:: 2019/01/13
+   :tags: Ubuntu, 2019
+   :category: Ubuntu
+
+
+==========================================
+オフラインのUbuntuにパッケージインストール
+==========================================
+
+.. attention::
+
+   ローカルにパッケージリポジトリ作る等の方が良いかもしれない。
+   試したら追記する。
+
+   ごちゃごちゃしてるから今度書き直す。
+
+オンラインのマシンが必要になる。
+オンラインの方でファイルをDL、オフラインの方でインストールという流れ。
+
+オンラインでファイルを取得
+==========================
+apt-get install
+---------------
+`/var/cache/apt/archives` に自動的にファイルをDLしてくる。
+
+.. code-block:: none
+
+   $ apt-get install --download-only [package name]
+
+.. note::
+
+   既にオンラインの方にインストールされているパッケージはファイルを落とせない模様。
+
+apt-get download
+----------------
+カレントディレクトリにファイルをDL。
+インストール済でも問題ないので上より良さそう。
+
+.. code-block:: none
+
+   $ apt-get download [package name]
+
+以下のコマンドで依存パッケージもDLできる。
+なお、不要な依存パッケージを無視できないのでエラーになる。
+
+.. code-block:: none
+
+   $ apt-get download $(apt-rdepends [package name]|grep -v "^ ")
+
+参考
+^^^^
+- https://stackoverflow.com/questions/13756800/how-to-download-all-dependencies-and-packages-to-directory
+- https://superuser.com/questions/1112525/ignore-apt-get-download-errors
+
+
+オフラインでインストール
+========================
+apt install -f
+--------------
+`-f` オプションでファイルからインストールできるようだ。
+しかし、最初はネットに接続しに行く(謎)。
+
+.. code-block:: none
+
+   $   apt install -f [.deb file path]
+
+面倒だったらパッケージリポジトリの設定ファイルをリネームしておけば良さそう。
+
+.. code-block:: none
+
+   $ mv /etc/apt/sources.list /etc/apt/sources.list.bk
+
+.. attention::
+
+   apt install -f を実行すると、他のパッケージを削除しようとする(よく分からない)。
+   dpkg -i を代わりに使う方が良いみたいだ。
+
+dpkg
+----
+[.deb file path]を `*` にもできるが、依存の解決はしないので順番にやっていくしかない。
+
+.. code-block:: none
+
+   $ sudo dpkg -i [.deb file path]
+
+参考
+^^^^
+- https://www.ostechnix.com/download-packages-dependencies-locally-ubuntu/
+
+余談：せやかてsudo
+------------------
+sudoが入っていない。
+
+.. code-block:: none
+
+   $ root@cd6e0f83b594:/# sudo
+   bash: sudo: command not found
+
+.debファイルからインストールすれば使えるようになる。
+
+.. code-block:: none
+
+   $ apt install -f ./sudo_1.8.16-0ubuntu1_amd64.deb
+
+less等も入っていないので同様に.debからインストールしておくのが吉。
+
+gdebi
+-----
+`dpkg -i` だと依存関係を解決せずにインストールする。
+
+gdebiというパッケージを使用すると依存関係を解決してインストールできるらしい。
+
+参考
+^^^^
+- http://mickey-happygolucky.hatenablog.com/entry/2017/08/05/062959

@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>オフラインのUbuntuにパッケージインストール &#8212; anzawatta-blog  ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <dl class="simple">
+<dt>post:: 2019/01/13</dt><dd><dl class="field-list simple">
+<dt class="field-odd">tags</dt>
+<dd class="field-odd"><p>Ubuntu, 2019</p>
+</dd>
+<dt class="field-even">category</dt>
+<dd class="field-even"><p>Ubuntu</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<section id="ubuntu">
+<h1>オフラインのUbuntuにパッケージインストール<a class="headerlink" href="#ubuntu" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>ローカルにパッケージリポジトリ作る等の方が良いかもしれない。
+試したら追記する。</p>
+<p>ごちゃごちゃしてるから今度書き直す。</p>
+</div>
+<p>オンラインのマシンが必要になる。
+オンラインの方でファイルをDL、オフラインの方でインストールという流れ。</p>
+<section id="id1">
+<h2>オンラインでファイルを取得<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<section id="apt-get-install">
+<h3>apt-get install<a class="headerlink" href="#apt-get-install" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><cite>/var/cache/apt/archives</cite> に自動的にファイルをDLしてくる。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ apt-get install --download-only [package name]
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>既にオンラインの方にインストールされているパッケージはファイルを落とせない模様。</p>
+</div>
+</section>
+<section id="apt-get-download">
+<h3>apt-get download<a class="headerlink" href="#apt-get-download" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>カレントディレクトリにファイルをDL。
+インストール済でも問題ないので上より良さそう。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ apt-get download [package name]
+</pre></div>
+</div>
+<p>以下のコマンドで依存パッケージもDLできる。
+なお、不要な依存パッケージを無視できないのでエラーになる。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ apt-get download $(apt-rdepends [package name]|grep -v &quot;^ &quot;)
+</pre></div>
+</div>
+<section id="id2">
+<h4>参考<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://stackoverflow.com/questions/13756800/how-to-download-all-dependencies-and-packages-to-directory">https://stackoverflow.com/questions/13756800/how-to-download-all-dependencies-and-packages-to-directory</a></p></li>
+<li><p><a class="reference external" href="https://superuser.com/questions/1112525/ignore-apt-get-download-errors">https://superuser.com/questions/1112525/ignore-apt-get-download-errors</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="id3">
+<h2>オフラインでインストール<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<section id="apt-install-f">
+<h3>apt install -f<a class="headerlink" href="#apt-install-f" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><cite>-f</cite> オプションでファイルからインストールできるようだ。
+しかし、最初はネットに接続しに行く(謎)。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$   apt install -f [.deb file path]
+</pre></div>
+</div>
+<p>面倒だったらパッケージリポジトリの設定ファイルをリネームしておけば良さそう。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mv /etc/apt/sources.list /etc/apt/sources.list.bk
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>apt install -f を実行すると、他のパッケージを削除しようとする(よく分からない)。
+dpkg -i を代わりに使う方が良いみたいだ。</p>
+</div>
+</section>
+<section id="dpkg">
+<h3>dpkg<a class="headerlink" href="#dpkg" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>[.deb file path]を <cite>*</cite> にもできるが、依存の解決はしないので順番にやっていくしかない。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo dpkg -i [.deb file path]
+</pre></div>
+</div>
+<section id="id4">
+<h4>参考<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.ostechnix.com/download-packages-dependencies-locally-ubuntu/">https://www.ostechnix.com/download-packages-dependencies-locally-ubuntu/</a></p></li>
+</ul>
+</section>
+</section>
+<section id="sudo">
+<h3>余談：せやかてsudo<a class="headerlink" href="#sudo" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>sudoが入っていない。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ root@cd6e0f83b594:/# sudo
+bash: sudo: command not found
+</pre></div>
+</div>
+<p>.debファイルからインストールすれば使えるようになる。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ apt install -f ./sudo_1.8.16-0ubuntu1_amd64.deb
+</pre></div>
+</div>
+<p>less等も入っていないので同様に.debからインストールしておくのが吉。</p>
+</section>
+<section id="gdebi">
+<h3>gdebi<a class="headerlink" href="#gdebi" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><cite>dpkg -i</cite> だと依存関係を解決せずにインストールする。</p>
+<p>gdebiというパッケージを使用すると依存関係を解決してインストールできるらしい。</p>
+<section id="id5">
+<h4>参考<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="http://mickey-happygolucky.hatenablog.com/entry/2017/08/05/062959">http://mickey-happygolucky.hatenablog.com/entry/2017/08/05/062959</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">anzawatta-blog</a></h1>
+
+
+
+
+
+
+
+
+<h3>ナビゲーション</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../book/engineer-intelligent-production.html">エンジニアの知的生産術を読んだ(仮)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mac/windows-to-mac.html">開発マシンをWindowsからMacに移行する考察メモ</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, anzawatta.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/ubuntu/install-package-offline.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

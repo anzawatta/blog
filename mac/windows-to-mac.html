@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>開発マシンをWindowsからMacに移行する考察メモ &#8212; anzawatta-blog  ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <dl class="simple">
+<dt>post:: 2019/02/16</dt><dd><dl class="field-list simple">
+<dt class="field-odd">tags</dt>
+<dd class="field-odd"><p>2019, tech, Vim, Mac</p>
+</dd>
+<dt class="field-even">category</dt>
+<dd class="field-even"><p>Vim</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<section id="windowsmac">
+<h1>開発マシンをWindowsからMacに移行する考察メモ<a class="headerlink" href="#windowsmac" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<section id="id1">
+<h2>前置き<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Windows95、98辺りからずっとWindowsを使っていた人が仕事でMacを使うようになった時の記録。</p>
+<p>使っていて引っかかった部分、開発で使う場合にどうすれば楽に移行できるかについてのメモ。</p>
+</section>
+<section id="gui">
+<h2>GUI<a class="headerlink" href="#gui" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>デスクトップ画面があって、タスクバーがあって、アプリケーションはウィンドウで開く…という点については同じ。</p>
+<p>ウィンドウの「閉じる」「最小」等のアイコンが左右逆なので、使い辛さはあるがマウスでポチポチやる分には困る事はない。</p>
+<section id="id2">
+<h3>ウィンドウの切り替え<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Windowsだと同じアプリケーションでもそれぞれが独立していて <cite>Alt+Tab</cite> でアクセスできる。</p>
+<p>Macだと <cite>Command+Space</cite> で似たような事ができる。
+ただし、同じアプリケーションは一つにまとまってしまう。同じアプリケーションを複数ある場合に一発でアクセスできない。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>アプリケーションを全画面にして左右にスライドさせるやり方もあるらしい。
+操作はキーボードで完結させたいので何だかんだ使っていない。</p>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2>キー配置<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>基本的には変わらないが、開発者なら多用する左手にあるCtrl辺りのキーが異なる。</p>
+<p>外付けのキーボードを使えば悩まなくて良いのかは調べてないので不明。</p>
+<section id="karabiner">
+<h3>Karabiner<a class="headerlink" href="#karabiner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Macのキー配置に慣れた方が良いが、あまりにも使いにくい場合は
+<a class="reference external" href="https://pqrs.org/osx/karabiner/">Karabiner</a> でキー配置変更するのが無難。</p>
+<p>現状は左下のCaps LockキーをCtrlキーに変更している。
+Vimだと大文字小文字でコマンドが変わるので、これを変更したら誤操作がなくなった。</p>
+<section id="id5">
+<h4>参考<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://qiita.com/kenmaz/items/0ff152af776a3e6e5f6e">https://qiita.com/kenmaz/items/0ff152af776a3e6e5f6e</a></p></li>
+</ul>
+</section>
+</section>
+<section id="windows">
+<h3>Windowsキー<a class="headerlink" href="#windows" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>当然ながら存在しない。</p>
+<p>代わりにCommandキーなるものがあるが、これはCtrlやAlt等の機能を総括した便利キー。</p>
+<p>といっても、CommandキーはCtrl代わりには使えない。
+<cite>Ctrl+u</cite> の代わりに <cite>Command+u</cite> とはできないので要注意(引っかかった奴)。</p>
+</section>
+<section id="alt">
+<h3>Altキー<a class="headerlink" href="#alt" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>便利で好きなんだけどな、ないんだな。</p>
+</section>
+<section id="ctrl">
+<h3>Ctrlキー<a class="headerlink" href="#ctrl" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>位置が違うので辛い。
+大文字入力にするキーが配置されている。辛い。</p>
+<p>WindowsだとCaps Lockなんかがある位置にある。辛い。</p>
+</section>
+<section id="pageup-pagedown">
+<h3>PageUp PageDown<a class="headerlink" href="#pageup-pagedown" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ない。</p>
+</section>
+<section id="id6">
+<h3>全角半角キー<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ない。</p>
+<p>スペースキーの左右に <cite>かな</cite> 、 <cite>全角</cite> 専用キーが存在する。
+トグルに慣れているので、Karabinerで左側のキーを全角半角キーに変更した。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>キー操作を極力同じにする為に、Windowsでもスペースキーの左側のキーを全角半角にしたら結構便利だった。
+Windowsのレジストリ変更でキー配置を変えるソフトは色々あるので探されたし。</p>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2>ターミナル<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><span class="strike">CygMacがほしい。</span></p>
+<p>デフォルトのTerminal.appは今一なので、現状iTerm2に落ち着いている。</p>
+<p>エディタで色設定をするのにTerminal.appだと色数が少ないのが原因。
+(設定で変えられるのか調べていない)。</p>
+<p>以下のコマンドで色表示を確認できる。Terminal.appだと色がガクガクでiTerm2だとなめらかな虹色が表示されるはず。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>awk &#39;BEGIN{
+   s=&quot;yaesan!&quot;;s= s s s s s s s s s s s;
+   for(col=0; col&lt;77; col++) {
+   r=255-(col*255/76);g=(col*510/76);b=(col*255/76);
+   if (g &gt; 255) g=510-g;
+        printf &quot;\033[48;2;%d;%d;%dm&quot;, r,g,b;
+        printf &quot;\033[38;2;%d;%d;%dm&quot;, 255-r,255-g,255-b;
+        printf &quot;%s\033[0m&quot;, substr(s,col+1,1);
+   }
+}&#39;
+</pre></div>
+</div>
+<p>あとはタブ表示できるのは便利。</p>
+</section>
+<section id="id8">
+<h2>エディタ<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Vimを使うのが一番ではないだろうか。
+設定ファイルは.vimrc一つにまとめられるし、大体デフォルトでインストールされている。
+上でも書いたがキー配置が違うので、細かくキーマップを設定できるのは心強い。</p>
+<p>他のエディタでも似たような事は出来るのかもしれないが、
+Git for Windowsにも入っていて開発者なら慣れているはずなのでVimを使うのが良いだろう。
+ちょっとしたメモでもVimを使うようにしていれば案外すぐ慣れる。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Macのデフォルトだとバージョンが違うのか:termコマンドがなかった。
+バージョンとか機能を気にする場合、別途インストールする必要はあるかもしれない。</p>
+</div>
+<section id="id9">
+<h3>キーマップ<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>とにかくCtrlの位置が違うので、Ctrlを使わないようなキーマップにすると楽。
+配置が同じなのは数字キーとアルファベット、Shift、Space、Enterくらいだと思っておく。</p>
+</section>
+<section id="id10">
+<h3>Altキー<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Windowsの時にはPyCharmのファイルリストをAlt+1で呼び出していたので、NERDTreeの表示も揃えていた。</p>
+<p>Windowsだと&lt;M&gt;をAltに設定出来たが、Macだとそれにあたるキーがなかった(？)ので、
+メタキーは極力使わずに別のキーを使うのが良いだろう。</p>
+</section>
+<section id="leader">
+<h3>&lt;Leader&gt;キー<a class="headerlink" href="#leader" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>具体的には&lt;Leader&gt;キーを&lt;Space&gt;に設定し、
+CtrlやAltを使うようなコマンドを&lt;Space&gt;+&lt;key&gt;にしてしまう。</p>
+</section>
+<section id="id11">
+<h3>プラグイン<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><span class="xref std std-ref">vim-favorite-plugin</span></p>
+</section>
+</section>
+<section id="ide">
+<h2>IDE<a class="headerlink" href="#ide" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>言語毎に異なるIDEを使うと設定が辛いので、とりあえず汎用のVSCodeに落ち着いている。
+デフォルトだとsyntaxの色設定がないので、使用する言語のExtensionは一通り導入しておくのがいいだろう。</p>
+<p>基本はLintを導入したVimでコードを書くが、
+大雑把にファイルを把握したい場合、Vimの操作が不安な場合に使う。</p>
+<p>また、他の人とソースを見る場合はVimではなくIDEを使った方が良い。</p>
+<p>IDEではVimバインドにはしない。
+キーマップは個人差があるし。</p>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>全てのエンジニアがVimmerとは限らない…！</p>
+</div>
+</section>
+<section id="git">
+<h2>Git<a class="headerlink" href="#git" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>WindowsでGit Bashを使うとコマンドの補完できる。</p>
+<p>Macにはないので、自前で補完用のプラグインを持ってくる必要がある。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><span class="xref std std-ref">bash-profile-git-bash</span> を参照されたし。</p>
+</div>
+<p>Vimを使う場合、vim-fugitiveを入れ、Git操作はVimで完結するのも案外いける。</p>
+<section id="gitk">
+<h3>gitk<a class="headerlink" href="#gitk" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ブランチや差分を確認できる簡易のGUIツール。</p>
+<p>Git for Windowsだとデフォルトで入っているはず。</p>
+<p>軽いので重宝していたがMacでは別途インストールが必要。
+<cite>brew install</cite> で入るはず。</p>
+<p>.gitconfigで以下のエイリアスを作成してターミナルで確認するのもあり。</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">.gitconfig</span><a class="headerlink" href="#id12" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>`graph = log --graph --oneline --decorate=full`
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">anzawatta-blog</a></h1>
+
+
+
+
+
+
+
+
+<h3>ナビゲーション</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, anzawatta.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/mac/windows-to-mac.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

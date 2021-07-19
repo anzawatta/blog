@@ -1,0 +1,17 @@
+anzawatta-blog
+==============
+
+`@anzawatta <https://twitter.com/anzawatta>`_ が調べたことをまとめるブログです。Web系の技術記事が多い。
+
+pagesに移転しました。
+前のサイトで消してしまった記事も含めぼちぼち戻していきます。
+ablog使い続けるかもう少し簡易な物使うか作るかにゃー。
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
+   :glob:
+
+   book/*
+   mac/*
+   ubuntu/*
